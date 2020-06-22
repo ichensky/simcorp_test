@@ -8,15 +8,23 @@ namespace app
         class A{}
         static void Main(string[] args)
         {
-            var list = new Data.SinglyLinkedList<string>();
-            var node = list.Add("xxx");
-            list.Add("yyy");
-            list.Add("zzz");
+            {
+                var list = new Data.SinglyLinkedList<string>();
+                var node = list.Add("xxx");
+                list.Add("yyy");
+                list.Add("zzz");
+                list.Delete(node);
+                list.ToArray();
+            }
+            {
+                var list = new Data.DoublyLinkedList<string>();
+                var node = list.Add("xxx");
+                list.Add("yyy");
+                list.Add("zzz");
+                list.Delete(node);
+                list.ToArray();
+            }
 
-
-            list.Delete(node);
-
-            //var r =list.Contains("yyy");
             Console.WriteLine("Hello World!");
         }
     }

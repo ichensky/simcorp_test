@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -7,95 +6,49 @@ using System.Xml;
 
 namespace Data
 {
-    public class Node<T> {
-        internal SinglyLinkedList<T> List;
-        internal Node<T> Next;
-        //public Node<T> Prev;
-        public T Item;
-        
-        public Node(T item) {
-            Item = item;
-        }
-        internal Node(SinglyLinkedList<T> list, T item) => (List, Item) = (list, item);
-    }
-   
-    public class SinglyLinkedList<T>
+
+    public abstract class LinkedList<T> : ILinkedList<T>
     {
-        public Node<T> first;
-        public Node<T> last;
+        internal Node<T> first;
+        internal Node<T> last;
+        protected internal int _count;
+        public int Count => _count;
+        public Node<T> First => first;
+        public Node<T> Last => last;
 
-        public Node<T> Add(T item)
+        public abstract Node<T> Add(T item);
+        public abstract void Delete(Node<T> n);
+
+        public Node<T> Contains(T value)
         {
-            var node = new Node<T>(this,item);
-            if (last==null)
-            {
-                first = node;
-                last = node;
-                return last;
-            }
-
-            last.Next = node;
-            last = node;
-            return node;
-        }
-
-        public Node<T> Contains(T value) {
-            if (first==null)
+            if (first == null)
             {
                 return null;
             }
             Node<T> node = first;
             do
             {
-                if (EqualityComparer<T>.Default.Equals(node.Item, value))
+                if (EqualityComparer<T>.Default.Equals(node.item, value))
                 {
                     return node;
                 }
-                node = node.Next;
+                node = node.next;
             }
             while (node != null);
             return null;
         }
-        public void Delete(Node<T> n)
+        public T[] ToArray()
         {
-            ValidateNode(n);
-            Node<T> node = first;
-            Node<T> prev = null;
-            do
+            var arr = new T[_count];
+            int i = 0;
+            var node = first;
+            while (node != null)
             {
-                if (node == n)
-                {
-                    break;
-                }
-                prev = node;
-                node = node.Next;
+                arr[i] = node.item;
+                node = node.next;
+                i++;
             }
-            while (node != null);
-            if (prev == null)
-            {
-                first = first.Next;
-            }
-            else {
-                prev.Next = n.Next;
-                if (n.Next==null)
-                {
-                    last = prev;
-                }
-            }
-        }
-
-
-        internal void ValidateNode(Node<T> node)
-        {
-            if (node == null)
-            {
-                throw new ArgumentNullException(nameof(node));
-            }
-
-            if (node.List != this)
-            {
-                throw new InvalidOperationException("Externale linked list node.");
-            }
+            return arr;
         }
     }
 }
