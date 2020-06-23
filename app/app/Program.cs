@@ -13,6 +13,7 @@ namespace app
                 var node = list.Add("xxx");
                 list.Add("yyy");
                 list.Add("zzz");
+                node = list.Contains("yyy");
                 list.Delete(node);
                 list.ToArray();
             }
@@ -21,6 +22,7 @@ namespace app
                 var node = list.Add("xxx");
                 list.Add("yyy");
                 list.Add("zzz");
+                node = list.Contains("yyy");
                 list.Delete(node);
                 list.ToArray();
             }

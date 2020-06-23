@@ -26,5 +26,17 @@ namespace Data.Tests
             Assert.IsTrue(arr[2] == "z");
 
         }
+
+        [TestMethod()]
+        public void ContainsTest()
+        {
+            var list = new SinglyLinkedList<string>();
+            list.Add("x");
+
+            var node = list.Contains("y");
+            Assert.IsTrue(node==null);
+            node = list.Contains("x");
+            Assert.IsTrue(node.Value=="x");
+        }
     }
 }
