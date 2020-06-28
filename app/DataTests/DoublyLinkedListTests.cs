@@ -104,9 +104,21 @@ namespace Data.Tests
             Assert.IsTrue(list.Count == 2);
             Assert.IsTrue(list.First.Value == "x");
             Assert.IsTrue(list.Last.Value == "z");
+            Assert.IsTrue(((DoublyNode<string>)list.First).Prev==null);
+            Assert.IsTrue(((DoublyNode<string>)list.First).Next.Value=="z");
+            Assert.IsTrue(((DoublyNode<string>)list.Last).Prev.Value=="x");
+            Assert.IsTrue(((DoublyNode<string>)list.Last).Next==null);
 
             // now 'x' has ref to 'z'
             Assert.IsTrue(list.First.Next.Value == "z");
+
+            // double delete
+            node = list.Contains("z");
+            list.Delete(node);
+            Assert.ThrowsException<Exception>(() => { list.Delete(node); });
+            node = list.Contains("x");
+            list.Delete(node);
+            Assert.ThrowsException<Exception>(() => { list.Delete(node); });
         }
     }
 }

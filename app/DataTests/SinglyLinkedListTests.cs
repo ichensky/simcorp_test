@@ -57,6 +57,7 @@ namespace Data.Tests
             Assert.IsTrue(list.First==null);
             Assert.IsTrue(list.Last==null);
 
+
             // add two els, del first
             list.Add("x");
             list.Add("y");
@@ -100,6 +101,14 @@ namespace Data.Tests
             // now 'x' has ref to 'z'
             Assert.IsTrue(list.First.Next.Value == "z");
 
+
+            // double delete
+            node = list.Contains("z");
+            list.Delete(node);
+            Assert.ThrowsException<Exception>(()=> { list.Delete(node); });
+            node = list.Contains("x");
+            list.Delete(node);
+            Assert.ThrowsException<Exception>(()=> { list.Delete(node); });
         }
     }
 }
